@@ -1,17 +1,22 @@
 [
     {
-        "title": "json vs simplejson vs ujson",
+        "posted": "Posted at: 28-03-2016",
         "filename": "posts/json_vs_simplejson_vs_ujson.html",
-        "posted": "Posted at: 28-03-2016"
+        "title": "json vs simplejson vs ujson"
     },
     {
-        "title": "prettytable",
+        "posted": "Posted at: 13-04-2016",
         "filename": "posts/prettytable.html",
-        "posted": "Posted at: 13-04-2016"
+        "title": "prettytable"
     },
     {
-        "posted": "Posted at: 15-04-2016",
+        "title": "Minimal Blogging",
         "filename": "posts/minimal_blogging.html",
-        "title": "Minimal Blogging"
+        "posted": "Posted at: 15-04-2016"
+    },
+    {
+        "posted": "Posted on: 18-04-2016",
+        "filename": "posts/python_libraries.html",
+        "title": "6 Lesser Known Python Data Analysis Libraries"
     }
 ]
