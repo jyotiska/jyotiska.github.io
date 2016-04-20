@@ -1,22 +1,22 @@
 [
     {
-        "posted": "Posted at: 28-03-2016",
+        "posted": "Posted on: 28-03-2016",
         "filename": "posts/json_vs_simplejson_vs_ujson.html",
         "title": "json vs simplejson vs ujson"
     },
     {
-        "posted": "Posted at: 13-04-2016",
+        "posted": "Posted on: 13-04-2016",
         "filename": "posts/prettytable.html",
         "title": "prettytable"
     },
     {
         "title": "Minimal Blogging",
         "filename": "posts/minimal_blogging.html",
-        "posted": "Posted at: 15-04-2016"
+        "posted": "Posted on: 15-04-2016"
     },
     {
         "posted": "Posted on: 19-04-2016",
         "filename": "posts/python_libraries.html",
-        "title": "6 Lesser Known Python Data Analysis Libraries"
+        "title": "6 Lesser Known Python Dona Analysis Libraries"
     }
 ]
