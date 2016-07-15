@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <meta charset="utf-8"><meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="methods.js"></script>
+        <link rel="stylesheet" href="http://bootswatch.com/united/bootstrap.min.css">
+    </head>
+    <body>
+        <br>
+        <div id="content">
+            <div class="row">
+                <div class="col-md-3 col-xs-1 col-lg-3"></div>
+                <div class="col-md-6 col-xs-10 col-lg-6">
+                    <h2 style="text-align: center;">Which Pokemon is it?</h2>
+                    <br>
+                    <h4 style="text-align: center;">Choose the correct name from the options and try to beat your own score!</h4>
+                    <br>
+                    <h4 style="text-align: center;">Your score: <span class="badge" id="score">0</span></h4>
+                </div>
+                <div class="col-md-3 col-xs-1 col-lg-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <img style="display: block; margin-left: auto; margin-right: auto" id="pokemon_image" src="#"></img>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <input type="button" class="btn btn-default btn-lg btn-block" id="input1" value="Input 1"></input>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <input type="button" class="btn btn-default btn-lg btn-block" id="input2" value="Input 2"></input>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <input type="button" class="btn btn-default btn-lg btn-block" id="input3" value="Input 3"></input>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+
+            <div class="modal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Game Over!</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Your score is: <span id="score2">0</span></p>
+                  </div>
+                  <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" id="restart">Start Again!</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </body>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-75679673-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+</html>
