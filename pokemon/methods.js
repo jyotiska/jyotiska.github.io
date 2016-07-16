@@ -23,7 +23,12 @@ $(document).ready(function() {
             $('#score2').text(String(score));
             pokemon_name = generate_random_image(difficulty);
         } else {
-            $('#content').html('<div class="row"><div class="col-md-4 col-xs-2 col-lg-4"></div><div class="col-md-4 col-xs-8 col-lg-4"><center><h2>Game Over!</h2></center><br><center><h4>Correct answer was: <b>' + pokemon_name["correct"] + '</b></h4></center><br><center><h4>Your Score: ' + score + '</h4></center><br><br><input type="button" class="btn btn-primary btn-lg btn-block" id="restart" value="Start Again!" onclick="location.reload();"></input></div><div class="col-md-4 col-xs-2 col-lg-4"></div></div>')
+            $('#social_buttons').append('<a class="twitter-share-button" id="twitter_url" href="https://twitter.com/intent/tweet?hashtags=whichpokemonisit&text=I%20identified%20' + score + ' Pokemons on&tw_p=tweetbutton&url=http%3A%2F%2Fjyotiska.github.io%2Fpokemon%2F">Tweet</a>');
+            window.twttr.widgets.load();
+            $('#final_correct_name').html('Correct answer was: <b>' + pokemon_name["correct"] + '</b>');
+            $('#final_score').html('Your Score: ' + score);
+            $('#content').hide();
+            $('#game_over').show();
         }
     });
 });
