@@ -18,6 +18,34 @@
     </style>
 
     <body>
+        <div id="fb-root"></div>
+        <script>
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <script>
+            window.twttr = (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+              if (d.getElementById(id)) return t;
+              js = d.createElement(s);
+              js.id = id;
+              js.src = "https://platform.twitter.com/widgets.js";
+              fjs.parentNode.insertBefore(js, fjs);
+
+              t._e = [];
+              t.ready = function(f) {
+                t._e.push(f);
+              };
+
+              return t;
+            }(document, "script", "twitter-wjs"));
+        </script>
         <div id="content">
             <div class="row">
                 <div class="col-md-2 col-xs-1 col-lg-2"></div>
@@ -92,6 +120,35 @@
                   </div>
                 </div>
               </div>
+            </div>
+        </div>
+        <div id="game_over" style="display:none">
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <center>
+                        <h2>Game Over!</h2>
+                    </center>
+                    <br>
+                    <center>
+                        <h4 id="final_correct_name"></h4>
+                    </center>
+                    <br>
+                    <center>
+                        <h4 id="final_score"></h4>
+                    </center>
+                    <br><br>
+                    <input type="button" class="btn btn-primary btn-lg btn-block" id="restart" value="Start Again!" onclick="location.reload();"></input>
+                    <br>
+                    <center>
+                        <div id="social_buttons">
+                            <div class="fb-share-button" data-href="http://jyotiska.github.io/pokemon/" data-layout="button_count" data-mobile-iframe="true">
+                                <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fjyotiska.github.io%2Fpokemon%2F&amp;src=sdkpreparse">Share</a>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
             </div>
         </div>
     </body>
