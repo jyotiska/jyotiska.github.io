@@ -7,37 +7,30 @@
         <link rel="stylesheet" href="http://bootswatch.com/united/bootstrap.min.css">
     </head>
     <body>
-        <br>
         <div id="content">
             <div class="row">
-                <div class="col-md-3 col-xs-1 col-lg-3"></div>
-                <div class="col-md-6 col-xs-10 col-lg-6">
+                <div class="col-md-2 col-xs-1 col-lg-2"></div>
+                <div class="col-md-8 col-xs-10 col-lg-8">
                     <h2 style="text-align: center;">Which Pokemon is it?</h2>
                     <br>
-                    <h4 style="text-align: center;">Your score: <span class="badge" id="score">0</span></h4>
                 </div>
-                <div class="col-md-3 col-xs-1 col-lg-3"></div>
+                <div class="col-md-2 col-xs-1 col-lg-2"></div>
             </div>
             <div class="row">
                 <div class="col-md-4 col-xs-2 col-lg-4"></div>
-                <div class="col-md-4 col-xs-8 col-lg-4">
-                    <img style="display: block; margin-left: auto; margin-right: auto" id="pokemon_image" src="#"></img>
+                <div class="col-md-1 col-xs-2 col-lg-1">
+                    <button href="#" class="btn btn-default btn-lg btn-block dropdown-toggle" data-toggle="dropdown" aria-expanded="false">&nbsp;<span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a class="diff" href="#" value="easy">Easy</a></li>
+                        <li><a class="diff" href="#" value="medium">Medium</a></li>
+                        <li><a class="diff" href="#" value="hard">Hard</a></li>
+                        <li><a class="diff" href="#" value="ultimate">Ultimate</a></li>
+                    </ul>
                 </div>
-                <div class="col-md-4 col-xs-2 col-lg-4"></div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4 col-xs-2 col-lg-4"></div>
-                <div class="col-md-4 col-xs-8 col-lg-4">
-                    <input type="button" class="btn btn-default btn-lg btn-block" id="input1" value="Input 1"></input>
-                </div>
-                <div class="col-md-4 col-xs-2 col-lg-4"></div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-md-4 col-xs-2 col-lg-4"></div>
-                <div class="col-md-4 col-xs-8 col-lg-4">
-                    <input type="button" class="btn btn-default btn-lg btn-block" id="input2" value="Input 2"></input>
+                <div class="col-md-3 col-xs-6 col-lg-3">
+                    <center>
+                        <button class="btn btn-info btn-lg btn-block disabled" style="text-align: center;">Your score: <span class="badge" id="score" onclick="">0</span></button>
+                    </center>
                 </div>
                 <div class="col-md-4 col-xs-2 col-lg-4"></div>
             </div>
@@ -45,7 +38,31 @@
             <div class="row">
                 <div class="col-md-4 col-xs-2 col-lg-4"></div>
                 <div class="col-md-4 col-xs-8 col-lg-4">
-                    <input type="button" class="btn btn-default btn-lg btn-block" id="input3" value="Input 3"></input>
+                    <img style="display: block; margin-left: auto; margin-right: auto;" id="pokemon_image" src="#"></img>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <input type="button" class="bt btn btn-default btn-lg btn-block" id="input1" value="Input 1"></input>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <input type="button" class="bt btn btn-default btn-lg btn-block" id="input2" value="Input 2"></input>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <input type="button" class="bt btn btn-default btn-lg btn-block" id="input3" value="Input 3"></input>
                 </div>
                 <div class="col-md-4 col-xs-2 col-lg-4"></div>
             </div>
