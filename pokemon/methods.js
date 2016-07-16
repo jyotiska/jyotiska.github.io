@@ -54,9 +54,20 @@ var generate_random_image = function(difficulty) {
     var imgurl = 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/' + random_number_string + '.png';
     $('#pokemon_image').attr('src', imgurl);
 
-    var all_keys = Object.keys(mapping);
+    var return_value = {"correct": "", "incorrect": ["", ""]};
 
-    var return_value = {"correct": mapping[random_number_string], "incorrect": [mapping[all_keys[Math.floor(Math.random() * all_keys.length)]], mapping[all_keys[Math.floor(Math.random() * all_keys.length)]]]};
+    return_value["correct"] = mapping[random_number_string];
+    delete mapping[random_number_string];
+
+    var all_keys = Object.keys(mapping);
+    var incorrect_choice_1 = all_keys[Math.floor(Math.random() * all_keys.length)];
+    return_value["incorrect"][0] = mapping[incorrect_choice_1];
+    delete mapping[incorrect_choice_1];
+
+    var all_keys = Object.keys(mapping);
+    var incorrect_choice_2 = all_keys[Math.floor(Math.random() * all_keys.length)];
+    return_value["incorrect"][1] = mapping[incorrect_choice_2];
+    delete mapping[incorrect_choice_1];
 
     var positions = [1, 2, 3];
     var random_position = positions[Math.floor(Math.random() * positions.length)];
