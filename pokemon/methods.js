@@ -3,11 +3,15 @@ $(document).ready(function() {
     var pokemon_name = "";
     var difficulty = "easy";
 
+    $('.diff').first().addClass('active');
+
     pokemon_name = generate_random_image(difficulty);
 
     $('.diff').click(function() {
         var selected_difficulty = $(this).attr('value');
         difficulty = selected_difficulty;
+        $('a').removeClass('active');
+        $(this).addClass('active');
         pokemon_name = generate_random_image(selected_difficulty);
     });
 
