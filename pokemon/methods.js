@@ -3,6 +3,15 @@ $(document).ready(function() {
     var pokemon_name = "";
     var difficulty = "easy";
 
+    $('#light').click(function() {
+        var css_value = $('#pokemon_image').css("-webkit-filter");
+        if (css_value === "brightness(0)") {
+            $('#pokemon_image').css("-webkit-filter", "none");
+        } else {
+            $('#pokemon_image').css("-webkit-filter", "brightness(0)");
+        }
+    });
+
     $('.diff').first().addClass('active');
 
     pokemon_name = generate_random_image(difficulty);
