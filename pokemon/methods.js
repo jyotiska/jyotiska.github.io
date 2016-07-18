@@ -9,6 +9,12 @@ $(document).ready(function() {
 
     $('.diff').click(function() {
         var selected_difficulty = $(this).attr('value');
+        if (selected_difficulty === difficulty) {
+            return;
+        }
+
+        score = 0;
+        updateScore(score);
         difficulty = selected_difficulty;
         $('a').removeClass('active');
         $(this).addClass('active');
@@ -19,8 +25,7 @@ $(document).ready(function() {
         var clicked_pokemon = this.value;
         if (clicked_pokemon === pokemon_name["correct"]) {
             score = score + 1;
-            $('#score').text(String(score));
-            $('#score2').text(String(score));
+            updateScore(score);
             pokemon_name = generate_random_image(difficulty);
         } else {
             $('#social_buttons').append('<a class="twitter-share-button" id="twitter_url" href="https://twitter.com/intent/tweet?hashtags=whichpokemonisit&text=I%20identified%20' + score + ' Pokemons on&tw_p=tweetbutton&url=http%3A%2F%2Fjyotiska.github.io%2Fpokemon%2F">Tweet</a>');
@@ -85,4 +90,9 @@ var generate_random_image = function(difficulty) {
     }
 
     return return_value;
-}
+};
+
+var updateScore = function(newScore) {
+    $('#score').text(String(newScore));
+    $('#score2').text(String(newScore));
+};
