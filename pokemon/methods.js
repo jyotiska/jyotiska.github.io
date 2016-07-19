@@ -37,7 +37,7 @@ $(document).ready(function() {
             updateScore(score);
             pokemon_name = generate_random_image(difficulty);
         } else {
-            $('#social_buttons').append('<a class="twitter-share-button" id="twitter_url" href="https://twitter.com/intent/tweet?hashtags=whichpokemonisit&text=I%20identified%20' + score + ' Pokemons on&tw_p=tweetbutton&url=http%3A%2F%2Fjyotiska.github.io%2Fpokemon%2F">Tweet</a>');
+            $('#social_buttons').append('<a class="twitter-share-button" id="twitter_url" href="https://twitter.com/intent/tweet?hashtags=whichpokemonisit&text=I%20identified%20' + score + ' Pokémon on&tw_p=tweetbutton&url=http%3A%2F%2Fjyotiska.github.io%2Fpokemon%2F">Tweet</a>');
             window.twttr.widgets.load();
             $('#final_correct_name').html('Correct answer was: <b>' + pokemon_name["correct"] + '</b>');
             $('#final_score').html('Your Score: ' + score);
