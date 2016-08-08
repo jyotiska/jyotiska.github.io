@@ -1,0 +1,33 @@
+
+
+<p><em>prettytable</em> is a popular Python package that lets you create beautiful CLI tables on terminal from multiple data sources. When I decided to learn Node/JavaScript, I decided port the library as a Node module as a good learning exercise. It took me a week and I was able to push the module to NPM. It has almost all original features plus it lets you draw tables directly from a JSON or a CSV file. Besides implementing the features, I also focused on keeping the codebase as idiomatic JavaScript as possible and writing decent documentation with as many examples as possible.</p>
+
+<p>The source code is available on <a href="https://github.com/jyotiska/prettytable">Github</a>. <a href="https://www.npmjs.com/package/prettytable">Here</a> is the NPM module link.</p>
+
+<p>Following is a sample usage taken from the project readme.</p>
+
+<pre>
+PrettyTable = require('prettytable');
+pt = new PrettyTable();
+
+var headers = ["name", "age", "city"];
+
+var rows = [
+        ["john", 22, "new york"],
+        ["elizabeth", 43, "chicago"],
+        ["bill", 31, "atlanta"],
+        ["mary", 18, "los angeles"]
+    ];
+
+pt.create(headers, rows);
+pt.print();
+
++-----------+-----+-------------+
+| name      | age | city        |
++-----------+-----+-------------+
+| john      | 22  | new york    |
+| elizabeth | 43  | chicago     |
+| bill      | 31  | atlanta     |
+| mary      | 18  | los angeles |
++-----------+-----+-------------+
+</pre>
