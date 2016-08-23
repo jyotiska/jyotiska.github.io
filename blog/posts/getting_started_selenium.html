@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Getting Started with Selenium</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="/blog/css/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Getting Started with Selenium</h1>
+            <p>Posted on: 23-08-2016</p>
+            <hr>
+        </header>
+<p>
+    Selenium is a software testing framework that is primarily used for testing web applications. It is written in Java and there are libaries and bindings available in many popular high level languages - Python, Ruby, JavaScript. In this post, I will show how to get started with Selenium and do some basic testing. The documentation for Python libary is pretty detailed and is available <a href="http://selenium-python.readthedocs.io/">here</a>.
+</p>
+
+<p>
+    Installing Selenium is pretty straightforward and can be installed easily using pip.
+</p>
+
+<pre>
+    pip install selenium
+</pre>
+
+<p>
+    The core of the Selenium is its web driver. The driver supports most of the popular web browsers - Google Chrome, Mozila Firefox, Opera, Safari etc as well as headless browsers like PhantomJS. The driver takes the methods from the user script and converts them to browser events and passes to the spawned browser instance. Selenium supports Firefox by default and we will be using it in our example. For other browsers, you will need to download the driver and pass the driver location to Selenium.
+</p>
+
+<p>
+    To get started, import the libary in your code and initialize the driver.
+</p>
+
+<pre>
+    from selenium import webdriver
+    import time
+
+    driver = webdriver.Firefox()
+</pre>
+
+<p>
+    If you have Firefox installed on your computer, you should see that a new Firefox windows has been spawned. Since we are not closing the driver manually, you will have to close the browser window yourself for now.
+</p>
+
+<p>
+    Now lets try to open a web page. The web driver provides a <code>get()</code> method for fetching a web page and displaying it on the browser window. Lets open the homepage of this blog.
+</p>
+
+<pre>
+    driver.get("http://jyotiska.github.io/")
+    time.sleep(1)
+</pre>
+
+<p>
+    Note that, there will be a sleep of 1 second after every second so that it gives you some time to see the changes. This is purely for demonstration purpose. You may choose to ignore this when you are writing your own Selenium scripts.
+</p>
+
+<p>
+    If you have run this, a new Firefox window should open up and navigate you to the web page.
+</p>
+
+<p>
+    Since Selenium is usually used for testing web applications, we are going to use it for testing bunch of stuffs. We are going to test the following:
+    <ol>
+        <li>The link to Blog should be working on lead me to correct page.</li>
+        <li>We should be able to go back from the Blog page to the main page.</li>
+        <li>The link to Github page should work and lead me to the correct Github page.</li>
+        <li>The number of projects in the Projects section should return 9.</li>
+        <li>The number of talks in the Talks section should return 4.</li>
+    </ol>
+</p>
+
+<p>
+    Lets get started!
+</p>
+
+<p>
+    First we need to find an element in the page that links to the Blog. We are going to use <code>find_element_by_name()</code> method to find the element. Once we have found the element, we are going to perform <code>click()</code> on it. That takes us to the new page. We verify that we are on the correct page by the assert statement.
+</p>
+
+<pre>
+    blog_link = driver.find_element_by_name("Blog")
+    blog_link.click()
+    assert "blog" in driver.current_url
+    time.sleep(1)
+</pre>
+
+<p>
+    Then we use the <code>back()</code> method to go back to the previous page. This takes us to the main page again.
+</p>
+
+<pre>
+    driver.back()
+    time.sleep(1)
+</pre>
+
+<p>
+    Then we find the link for Github in similar way using the <code>find_element_by_name()</code> method and click on the link. This should take us to the Github page. We verify that we are on the correct page using the assert statement. We go back to the main page again using <code>back()</code>.
+</p>
+
+<pre>
+    github_link = driver.find_element_by_name("Github")
+    github_link.click()
+    assert "jyotiska" in driver.current_url
+    time.sleep(1)
+
+    driver.back()
+    time.sleep(1)
+</pre>
+
+<p>
+    Now lets try to find the number of projects listed on the page and assert whether the count is 9. First, we find the projects using the <code>find_element_by_id()</code> method and then find all individual projects into it using <code>find_elements_by_css_selector()</code> method. We append the project names in a list and assert the length of the list at the end.
+</p>
+
+<pre>
+    all_projects = []
+    projects = driver.find_element_by_id("projects").find_elements_by_css_selector("li")
+    for item in projects:
+        all_projects.append(item.text)
+    assert len(all_projects) == 9
+    time.sleep(1)
+</pre>
+
+<p>
+    To find all talks, we do the same thing we did with the projects above.
+</p>
+
+<pre>
+    all_talks = []
+    talks = driver.find_element_by_id("talks").find_elements_by_css_selector("li")
+    for item in talks:
+        all_talks.append(item.text)
+    assert len(all_talks) == 4
+    time.sleep(1)
+</pre>
+
+<p>
+    And that's it! This was a short intro and only covered the basics. There are a lot of things that can be achieved using Selenium including writing full test suites for a web application. I will try to cover some more cool Selenium tricks in next posts. The entire code is available <a href="https://gist.github.com/jyotiska/effc0c1df3da402b8e827b054414a150">here</a>.
+</p>
+<hr>
+<p>
+    <center>
+        Powered by <a href="https://github.com/jyotiska/minni">minni</a>
+    </center>
+</p>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','UA-75679673-1','auto');ga('send','pageview');
+</script>
+</body>
+</html>

@@ -1,22 +1,27 @@
 [
     {
-        "posted": "Posted on: 19-04-2016",
+        "posted": "Posted on: 23-08-2016",
+        "filename": "posts/getting_started_selenium.html",
+        "title": "Getting Started with Selenium"
+    },
+    {
+        "title": "6 Lesser Known Python Data Analysis Libraries",
         "filename": "posts/python_libraries.html",
-        "title": "6 Lesser Known Python Data Analysis Libraries"
+        "posted": "Posted on: 19-04-2016"
     },
     {
-        "title": "Minimal Blogging",
+        "posted": "Posted on: 15-04-2016",
         "filename": "posts/minimal_blogging.html",
-        "posted": "Posted on: 15-04-2016"
+        "title": "Minimal Blogging"
     },
     {
-        "posted": "Posted on: 28-03-2016",
+        "title": "json vs simplejson vs ujson",
         "filename": "posts/json_vs_simplejson_vs_ujson.html",
-        "title": "json vs simplejson vs ujson"
+        "posted": "Posted on: 28-03-2016"
     },
     {
-        "posted": "Posted on: 13-04-2016",
+        "title": "prettytable",
         "filename": "posts/prettytable.html",
-        "title": "prettytable"
+        "posted": "Posted on: 13-04-2016"
     }
 ]
