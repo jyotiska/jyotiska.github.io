@@ -1,0 +1,47 @@
+<p>If you work with Python scripts that print bunch of stuff on terminal, sometimes you would want to add styles that distinguish certain parts in a blob of text. A basic method of styling is to add colors to the text or to add a background color to text. Personally, whenever I am parsing log files or working with streaming data, I like to change the color of certain keywords for easier debugging. Python provides ways to stylize texts on stdout by letting you add colors or styles. Lets see some examples - </p>
+
+<pre>
+    class styles:
+        HEADER = '\033[95m'
+        BLUE = '\033[94m'
+        GREEN = '\033[92m'
+        WARNING = '\033[93m'
+        FAIL = '\033[91m'
+        BOLD = '\033[1m'
+        UNDERLINE = '\033[4m'
+        ENDC = '\033[0m'
+</pre>
+
+<p>
+    This class gives you basic styling to texts using ANSI escape sequences. This works on Linux and OS X, Windows 10 too if you are using VT100. You can test this out with some basic strings. You can also mix and match multiple styles.
+</p>
+
+<pre>
+    print styles.BLUE + "hello, this is a test string" + styles.ENDC
+    print styles.GREEN + styles.BOLD + "hello, this is a test string" + styles.ENDC
+    print styles.WARNING + styles.UNDERLINE + "hello, this is a test string" + styles.ENDC
+</pre>
+
+<p>
+    Apart from this, <a href="https://pypi.python.org/pypi/colorama">colorama</a> project gives you loads of options and supports cross platform styling. Here is a code snippet using colorama.
+</p>
+
+<pre>
+    from colorama import Fore, Back, Style
+
+    print(Fore.RED + 'some red text')
+    print(Back.GREEN + 'and with a green background')
+    print(Style.DIM + 'and in dim text')
+    print(Style.RESET_ALL)
+    print('back to normal now')
+</pre>
+
+<p>It gives you the following output.</p>
+
+<p>
+    <img src="http://i.imgur.com/ik4Y6z7.png" alt="">
+</p>
+
+<p>
+    There are few other libaries available as well such as <a href="https://pypi.python.org/pypi/termcolor">termcolor</a> or <a href="https://pypi.python.org/pypi/blessings">blessings</a>. If you are not willing to add another extra library to your project, you can always create a wrapper method using the class above for printing texts with specific styles.
+</p>

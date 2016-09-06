@@ -1,27 +1,32 @@
 [
     {
-        "posted": "Posted on: 23-08-2016",
+        "posted": "Posted on: 06-09-2016",
+        "filename": "posts/adding_color_to_python_output.html",
+        "title": "Adding Color to Python Output"
+    },
+    {
+        "title": "Getting Started with Selenium",
         "filename": "posts/getting_started_selenium.html",
-        "title": "Getting Started with Selenium"
+        "posted": "Posted on: 23-08-2016"
     },
     {
-        "title": "6 Lesser Known Python Data Analysis Libraries",
+        "posted": "Posted on: 19-04-2016",
         "filename": "posts/python_libraries.html",
-        "posted": "Posted on: 19-04-2016"
+        "title": "6 Lesser Known Python Data Analysis Libraries"
     },
     {
-        "posted": "Posted on: 15-04-2016",
+        "title": "Minimal Blogging",
         "filename": "posts/minimal_blogging.html",
-        "title": "Minimal Blogging"
+        "posted": "Posted on: 15-04-2016"
     },
     {
-        "title": "json vs simplejson vs ujson",
+        "posted": "Posted on: 28-03-2016",
         "filename": "posts/json_vs_simplejson_vs_ujson.html",
-        "posted": "Posted on: 28-03-2016"
+        "title": "json vs simplejson vs ujson"
     },
     {
-        "title": "prettytable",
+        "posted": "Posted on: 13-04-2016",
         "filename": "posts/prettytable.html",
-        "posted": "Posted on: 13-04-2016"
+        "title": "prettytable"
     }
 ]
