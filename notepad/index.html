@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Personal Notepad</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+	body {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
+	}
+
+	textarea {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+		font-size: 14px;
+		line-height: 1.5em;
+		padding: 1em;
+	}
+
+	button {
+		background-color: #008CBA;
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+	}
+</style>
+<script type="text/javascript">
+	function copyfunc() {
+  		var copyText = document.getElementById("myinput");
+  		copyText.select();
+		copyText.setSelectionRange(0, 99999);
+  		document.execCommand("copy");
+}
+</script>
+
+<body>
+	<center>
+		<h2>Personal Notepad - Start Typing</h2>
+		<textarea rows=30 cols=100 id="myinput"></textarea>
+		<br /> <br />
+		<button onclick="copyfunc()">Copy to clipboard!</button>
+	</center>
+</body>
+</html>
