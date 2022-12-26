@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <meta charset="utf-8"><meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+        <meta name="description" content="Which Pokémon is it? Guess the Pokémon and beat your own score!"/>
+        <title>Which Pokémon is it?</title>
+        <link rel="stylesheet" href="https://bootswatch.com/3/cosmo/bootstrap.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    </head>
+
+    <style>
+        .active {
+            text-decoration: none;
+            color: #fff !important;
+            background-color: #e95420;
+        }
+    </style>
+
+    <body>
+        <div id="fb-root"></div>
+        <script>
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <script>
+            window.twttr = (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+              if (d.getElementById(id)) return t;
+              js = d.createElement(s);
+              js.id = id;
+              js.src = "https://platform.twitter.com/widgets.js";
+              fjs.parentNode.insertBefore(js, fjs);
+
+              t._e = [];
+              t.ready = function(f) {
+                t._e.push(f);
+              };
+
+              return t;
+            }(document, "script", "twitter-wjs"));
+        </script>
+        <div id="content">
+            <div class="row">
+                <div class="col-md-2 col-xs-1 col-lg-2"></div>
+                <div class="col-md-8 col-xs-10 col-lg-8">
+                    <h1 style="text-align: center;">Which Pokémon is it?</h1>
+                    <br>
+                    <h2 style="text-align: center;">Current Score: <span style="font-weight: bold;" id="score">0</span></h2>
+                    <br>
+                    <br>
+                </div>
+                <div class="col-md-2 col-xs-1 col-lg-2"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 col-xs-2 col-lg-5"></div>
+                <div class="col-md-1 col-xs-2 col-lg-1">
+                    <button href="#" class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bars" aria-hidden="true"></i></button>
+                    <ul class="dropdown-menu">
+                        <li><a class="diff" href="#" value="gen1">Up to Gen 1</a></li>
+                        <li><a class="diff" href="#" value="gen2">Up to Gen 2</a></li>
+                        <li><a class="diff" href="#" value="gen3">Up to Gen 3</a></li>
+                        <li><a class="diff" href="#" value="gen4">Up to Gen 4</a></li>
+                        <li><a class="diff" href="#" value="gen5">Up to Gen 5</a></li>
+                        <li><a class="diff" href="#" value="gen6">Up to Gen 6</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-1 col-xs-2 col-lg-1">
+                    <center>
+                        <button class="btn btn-success btn-block" style="text-align: center;" id="light"><i class="fa fa-lightbulb-o" aria-hidden="true"></i></button>
+                    </center>
+                </div>
+                <div class="col-md-5 col-xs-2 col-lg-5"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <img style="display: block; margin-left: auto; margin-right: auto; -webkit-filter: brightness(0);" id="pokemon_image" src="#"></img>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <input type="button" class="bt btn btn-warning btn-lg btn-block" id="input1" value="Input 1"></input>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <input type="button" class="bt btn btn-warning btn-lg btn-block" id="input2" value="Input 2"></input>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <input type="button" class="bt btn btn-warning btn-lg btn-block" id="input3" value="Input 3"></input>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+
+            <div class="modal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title">Game Over!</h1>
+                  </div>
+                  <div class="modal-body">
+                    <h2>Your score is: <span id="score2" style="font-weight: bold;">0</span></h2>
+                  </div>
+                  <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" id="restart">Start Again!</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div id="game_over" style="display:none">
+            <div class="row">
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+                <div class="col-md-4 col-xs-8 col-lg-4">
+                    <center>
+                        <h1>Game Over!</h1>
+                    </center>
+                    <br>
+                    <center>
+                        <h2 id="final_correct_name"></h2>
+                    </center>
+                    <br>
+                    <center>
+                        <h2 id="final_score"></h2>
+                    </center>
+                    <br><br>
+                    <input type="button" class="btn btn-primary btn-lg btn-block" id="restart" value="Start Again!" onclick="location.reload();"></input>
+                    <br>
+                    <center>
+                        <div id="social_buttons">
+                            <div class="fb-share-button" data-href="http://jyotiska.github.io/pokemon/" data-layout="button_count" data-mobile-iframe="true">
+                                <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fjyotiska.github.io%2Fpokemon%2F&amp;src=sdkpreparse">Share</a>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+                <div class="col-md-4 col-xs-2 col-lg-4"></div>
+            </div>
+        </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="methods.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-75679673-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+</html>
