@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Jyotiska Khasnabish</title>
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Crimson+Text:400,400italic,700,600">
+
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-75679673-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+
+        <style type="text/css">
+            .content {
+                max-width: 40em;
+                margin: 10px auto;
+            }
+
+            body, p {
+                font-family: "Crimson Text", "Helvetica", "Arial", sans-serif;
+                font-size: 18px;
+                line-height: 1.7;
+                -moz-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            h1, h2, h3 {
+                font-family: "Montserrat", "Helvetica", "Arial", sans-serif;
+                margin-top: 1em;
+                padding-top: 1em;
+                color: #333;
+                font-weight: 500;
+                -moz-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            a {
+                color: #e81c4f;
+                text-decoration: none;
+            }
+
+            header {
+                max-width: none;
+                background-color: #fff;
+                background-position: center top;
+                background-repeat: no-repeat;
+                background-size: cover;
+                line-height: 1.2;
+                padding: 3vw 1em;
+                text-align: center;
+            }
+
+            header h1 {
+                font-size: 2.0em;
+                font-weight: 200;
+            }
+
+            header a {
+                font-family: "Montserrat", "Helvetica", "Arial", sans-serif;
+                border: 1px solid #e81c4f;
+                border-radius: 290486px;
+                font-size: 0.7em;
+                letter-spacing: 0.2em;
+                padding: 1em 2em;
+                text-transform: uppercase;
+                text-decoration: none;
+            }
+
+            header a:hover {
+                background:  #e81c4f;
+                color: white;
+            }
+
+            ul {
+                margin: 0;
+                padding: 0;
+                list-style-type: none;
+            }
+
+            li {
+               margin: 0 0 15px 0;
+            }
+
+            li a {
+                font-size: 20px;
+            }
+         </style>
+
+    <body>
+        <header id="header">
+            <h1>Jyotiska Khasnabish</h1>
+        </header>
+
+        <div id="content" class="content">
+            <p>Hi! I am Jyotiska, currently co-founder and CTO of <a href="https://krishihub.com">KrishiHub</a>.
+                Previously, I worked at <a href="http://www.gsn.com/">GSN Games</a> as a Data Engineer,
+                heading the DE team for the Bangalore studio. Before this, I was with <a href="http://www.dataweave.com">DataWeave</a>
+                building their products. I did my masters from IIIT Bangalore with Data Science specialization.
+                My masters thesis was a collaboration between University of Naples and Infosys Labs,
+                where I interned during my final semester.</p>
+
+            <p>Whenever I find time, I work on few side projects of my own and contribute to open source.
+                My personal projects are on my <a href="http://github.com/jyotiska">GitHub</a> profile.
+                The best way to contact me is by <a href="mailto:jkhasnabish@gmail.com">email</a>.</p>
+
+            <h2>Projects</h2>
+            <ul id="projects">
+                <li><a href="https://whenisthemeeting.netlify.app/">When is the meeting?</a> - A helpful tool to figure out your meetings that are scheduled in different timezones.</li>
+                <li><a href="https://jyotiska.github.io/notepad/">LiteNote</a> - A lightweight personal notepad on your browser.</li>
+                <li><a href="https://checkli.netlify.app/">Checkli</a> - A minimal, personal checklist manager on your browser.</li>
+                <li><a href="https://easychart.netlify.app/">EasyChart</a> - Create and download charts and graphs on your browser.</li>
+                <li><a href="#">stackzed</a> - stackzed lets you create beautiful and unique stack pages for you or your organization that you can share with the rest of the world. (Inactive)</li>
+                <li><a href="http://jyotiska.github.io/pokemon/">Which Pokémon is it?</a> - A trivia game that lets you guess the name of the Pokémon from the silhouette on screen. Received close to 30,000 game sessions within few days on launch. Got featured on <a href="https://www.producthunt.com/games/which-pokemon-is-it">Product Hunt</a> and other websites.</li>
+                <li><a href="https://github.com/jyotiska/prettytable">prettytable</a> - CLI module for printing pretty tables on console from multiple data sources.</li>
+                <li><a href="https://github.com/jyotiska/minpubsub">minpubsub</a> - A minimal PubSub based distributed message queue model with multiple backend persistence modes - InMemory, SQLite, MySQL, MongoDB.</li>
+                <li><a href="https://github.com/jyotiska/jsonq">jsonq</a> - Query a JSON stream from command line.</li>
+                <li><a href="https://github.com/jyotiska/go-webcolors">go-webcolors</a> - Port of webcolors library from Python to Go.</li>
+                <li><a href="https://github.com/jyotiska/minni">minni</a> - A tiny and minimal static site generator written in Python.</li>
+            </ul>
+
+            <h2>Talks</h2>
+            <ul id="talks">
+                <li>Introduction to DataFrames in Spark, Apache Spark Meetup July 2015, Bangalore, India.<a href="https://speakerdeck.com/jyotiska/introduction-to-dataframes-in-spark">(slides)</a></li>
+                <li>Image Processing at Scale with Go, GopherCon India 2015, Bangalore, India. <a href="https://speakerdeck.com/jyotiska/image-processing-in-scale-with-go-gophercon-india-2015">(slides)</a> <a href="https://www.youtube.com/watch?v=R-0vNocr-9Q">(video)</a></li>
+                <li>Python + Spark: Lightning Fast Cluster Computing, PyCon India 2014, Bangalore, India. <a href="https://speakerdeck.com/jyotiska/python-plus-spark-lightning-fast-cluster-computing-pycon-india-2014">(slides)</a> <a href="https://www.youtube.com/watch?v=1KuqWuuAazM">(video)</a></li>
+                <li>Implementing a Publish-Subscribe Distributed Notification System on Hadoop, 48th CSI Annual Convention, Vizag, India. <a href="https://speakerdeck.com/jyotiska/implementing-a-publish-subscribe-distributed-notification-system-in-hadoop-csi-2013">(slides)</a></li>
+            </ul>
+        </div>
+        <br>
+    </body>
+</html>
