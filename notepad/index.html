@@ -1,48 +1,414 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Personal Notepad</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notepad</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      /* Light mode */
+      --bg-light: #f5f5f5;
+      --sidebar-light: #ffffff;
+      --text-light: #333;
+      --card-light: #ffffff;
+      --hover-light: #eaeaea;
+
+      /* Dark mode */
+      --bg-dark: #121212;
+      --sidebar-dark: #1f1f1f;
+      --text-dark: #ffffff;
+      --card-dark: #2c2c2c;
+      --hover-dark: #333;
+
+      /* Accent colors */
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --danger: #e74c3c;
+      --danger-hover: #c0392b;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Light mode styles */
+    body.light-mode {
+      background-color: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      padding: 1rem;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #ccc;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar.light-mode {
+      background-color: var(--sidebar-light);
+    }
+
+    .sidebar.dark-mode {
+      background-color: var(--sidebar-dark);
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .sidebar-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .sidebar-buttons button {
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 0.75rem 1rem;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-buttons button:hover {
+      background-color: var(--accent-hover);
+    }
+
+    /* Note list */
+    .note-list {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .note-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      background-color: var(--card-light);
+      border-radius: 6px;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    body.dark-mode .note-list li {
+      background-color: var(--card-dark);
+    }
+
+    .note-list li:hover {
+      background-color: var(--hover-light);
+    }
+
+    body.dark-mode .note-list li:hover {
+      background-color: var(--hover-dark);
+    }
+
+    .note-title {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-right: 0.5rem;
+    }
+
+    /* Delete button in list */
+    .note-delete {
+      background-color: var(--danger);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      transition: background-color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .note-delete:hover {
+      background-color: var(--danger-hover);
+    }
+
+    /* Main content */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .top-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .top-bar button {
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 0.75rem 1rem;
+      font-size: 14px;
+      transition: background-color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-bar button:hover {
+      background-color: var(--accent-hover);
+    }
+
+    /* Note title input */
+    #noteTitle {
+      width: 100%;
+      font-size: 1.1rem;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+      box-sizing: border-box;
+    }
+
+    /* Editor area */
+    #editor {
+      flex: 1;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 1rem;
+      font-size: 14px;
+      line-height: 1.5em;
+      resize: none;
+      outline: none;
+      overflow: auto;
+    }
+
+    /* Dark mode adjustments */
+    .dark-mode #noteTitle {
+      background-color: #222;
+      color: #fff;
+      border: 1px solid #555;
+    }
+
+    .dark-mode #editor {
+      background-color: #222;
+      color: #fff;
+      border: 1px solid #555;
+    }
+
+    .dark-mode .main {
+      background-color: var(--bg-dark);
+    }
+  </style>
 </head>
-<style>
-	body {
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
-	}
+<body class="dark-mode">
+  <div class="container">
+    <div class="sidebar dark-mode" id="sidebar">
+      <h2>My Notes</h2>
+      <ul class="note-list" id="noteList"></ul>
+      <div class="sidebar-buttons">
+        <button onclick="createNewNote()">New Note</button>
+        <button onclick="saveCurrentNote()">Save</button>
+      </div>
+    </div>
 
-	textarea {
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-		font-size: 14px;
-		line-height: 1.5em;
-		padding: 1em;
-	}
+    <div class="main">
+      <div class="top-bar">
+        <button onclick="toggleTheme()">Theme</button>
+        <button onclick="copyToClipboard()">Copy</button>
+        <button onclick="clearEditor()">Clear</button>
+      </div>
+      <input type="text" id="noteTitle" placeholder="Note Title..." />
+      <div id="editor" contenteditable="true" placeholder="Type your notes here..."></div>
+    </div>
+  </div>
 
-	button {
-		background-color: #008CBA;
-		border: none;
-		color: white;
-		padding: 15px 32px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-	}
-</style>
-<script type="text/javascript">
-	function copyfunc() {
-  		var copyText = document.getElementById("myinput");
-  		copyText.select();
-		copyText.setSelectionRange(0, 99999);
-  		document.execCommand("copy");
-}
-</script>
+  <script>
+    let notes = [];
+    let currentNoteId = null;
 
-<body>
-	<center>
-		<h2>Personal Notepad - Start Typing</h2>
-		<textarea rows=30 cols=100 id="myinput"></textarea>
-		<br /> <br />
-		<button onclick="copyfunc()">Copy to clipboard!</button>
-	</center>
+    window.addEventListener('DOMContentLoaded', () => {
+      // Load notes from local storage on page load
+      loadNotesFromStorage();
+      renderNotes();
+    });
+
+    // Toggle light/dark mode
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      document.body.classList.toggle('light-mode');
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('dark-mode');
+      sidebar.classList.toggle('light-mode');
+    }
+
+    // Create a new note
+    function createNewNote() {
+      // Clear editor and title
+      document.getElementById('editor').innerHTML = '';
+      document.getElementById('noteTitle').value = '';
+      currentNoteId = null;
+    }
+
+    // Save or update the current note
+    function saveCurrentNote() {
+      const titleInput = document.getElementById('noteTitle');
+      const contentDiv = document.getElementById('editor');
+      const title = titleInput.value.trim() || 'Untitled Note';
+      const content = contentDiv.innerHTML;
+
+      if (currentNoteId === null) {
+        // Create a new note object
+        const newNote = {
+          id: Date.now(),
+          title: title,
+          content: content
+        };
+        notes.push(newNote);
+        currentNoteId = newNote.id;
+      } else {
+        // Update existing note
+        const noteIndex = notes.findIndex(note => note.id === currentNoteId);
+        if (noteIndex !== -1) {
+          notes[noteIndex].title = title;
+          notes[noteIndex].content = content;
+        }
+      }
+      // Save to localStorage
+      saveNotesToStorage();
+      // Re-render list
+      renderNotes();
+      alert('Note saved successfully!');
+    }
+
+    // Render the notes in the sidebar
+    function renderNotes() {
+      const noteList = document.getElementById('noteList');
+      noteList.innerHTML = '';
+
+      notes.forEach(note => {
+        const li = document.createElement('li');
+        const titleSpan = document.createElement('span');
+        titleSpan.innerText = note.title;
+        titleSpan.classList.add('note-title');
+        titleSpan.onclick = () => {
+          loadNote(note.id);
+        };
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('note-delete');
+        deleteBtn.innerText = 'Delete';
+        deleteBtn.onclick = (e) => {
+          e.stopPropagation();
+          deleteNote(note.id);
+        };
+
+        li.appendChild(titleSpan);
+        li.appendChild(deleteBtn);
+        noteList.appendChild(li);
+      });
+    }
+
+    // Load a note into the editor
+    function loadNote(noteId) {
+      const note = notes.find(n => n.id === noteId);
+      if (note) {
+        currentNoteId = note.id;
+        document.getElementById('noteTitle').value = note.title;
+        document.getElementById('editor').innerHTML = note.content;
+      }
+    }
+
+    // Delete a note
+    function deleteNote(noteId) {
+      if (!confirm('Are you sure you want to delete this note?')) return;
+      notes = notes.filter(note => note.id !== noteId);
+
+      // If the current note is deleted, clear the editor
+      if (currentNoteId === noteId) {
+        currentNoteId = null;
+        document.getElementById('editor').innerHTML = '';
+        document.getElementById('noteTitle').value = '';
+      }
+      // Save and re-render
+      saveNotesToStorage();
+      renderNotes();
+    }
+
+    // Save all notes to localStorage
+    function saveNotesToStorage() {
+      localStorage.setItem('mySidebarNotes', JSON.stringify(notes));
+    }
+
+    // Load notes from localStorage
+    function loadNotesFromStorage() {
+      const storedNotes = localStorage.getItem('mySidebarNotes');
+      if (storedNotes) {
+        notes = JSON.parse(storedNotes);
+      }
+    }
+
+    // Copy notes to clipboard
+    function copyToClipboard() {
+      const editor = document.getElementById('editor');
+      const range = document.createRange();
+      range.selectNodeContents(editor);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      try {
+        document.execCommand('copy');
+        alert('Content copied to clipboard!');
+      } catch (err) {
+        alert('Unable to copy!');
+      }
+      selection.removeAllRanges();
+    }
+
+    // Clear the editor
+    function clearEditor() {
+      if (confirm('Are you sure you want to clear the editor?')) {
+        document.getElementById('editor').innerHTML = '';
+        document.getElementById('noteTitle').value = '';
+        currentNoteId = null;
+      }
+    }
+  </script>
 </body>
 </html>
