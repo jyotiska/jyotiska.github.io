@@ -1,10 +1,1719 @@
 <!DOCTYPE html>
-<html>
-   <head>
-      <title>Which Pokemon is it?</title>
-      <meta http-equiv = "refresh" content = "1; url = https://www.jyotiska.in/pokemon" />
-   </head>
-   <body>
-      <p>Redirecting to new location</p>
-   </body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Which Pokémon is it?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Which Pokémon is it? Guess the Pokémon and beat your own score!"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #ff5350;
+        --secondary: #3b4cca;
+        --accent: #ffde00;
+        --light: #f8f9fa;
+        --dark: #343a40;
+        --success: #4cd964;
+        --info: #17a2b8;
+        --option1: #ff9a3c;
+        --option2: #4cd964;
+        --option3: #5ac8fa;
+        --panel-bg: #44aae5;
+        --panel-border: #34a0dd;
+        --panel-shadow: #2281b9;
+        --button-bg: #ff9933;
+        --button-border: #f27d0c;
+        --button-shadow: #c85c00;
+        --green-button-bg: #4cd964;
+        --green-button-border: #3aaa4e;
+        --green-button-shadow: #2a8339;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        padding: 0;
+        margin: 0;
+        min-height: 100vh;
+        background-image: linear-gradient(135deg, #83eaf1 0%, #63a4ff 100%);
+        background-attachment: fixed;
+      }
+
+      .game-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .game-panel {
+        background-color: var(--panel-bg);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 8px 0 var(--panel-shadow), 0 0 0 5px var(--panel-border);
+        position: relative;
+        margin-bottom: 2rem;
+      }
+
+      .game-panel::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.2) 0%,
+          rgba(255, 255, 255, 0) 80%
+        );
+        pointer-events: none;
+        border-radius: 12px;
+      }
+
+      .close-btn {
+        display: none;
+      }
+
+      h1 {
+        color: white;
+        font-weight: 700;
+        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+
+      .score-container {
+        background: linear-gradient(to right, var(--secondary), #5664e6);
+        color: white;
+        border-radius: 12px;
+        padding: 0.8rem 2rem;
+        display: inline-block;
+        box-shadow: 0 8px 0 var(--panel-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+        position: relative;
+        margin-top: 0.5rem;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+        transform: scale(1.1);
+        z-index: 5;
+      }
+
+      .score-container::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.2) 0%,
+          rgba(255, 255, 255, 0) 60%
+        );
+        border-radius: 12px;
+      }
+
+      .score-value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--accent);
+        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+      }
+
+      .pokemon-image-container {
+        position: relative;
+        width: 250px;
+        height: 250px;
+        margin: 1.5em auto;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 1rem;
+        box-shadow: 0 8px 0 rgba(0, 0, 0, 0.1), 0 0 0 5px var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #pokemon_image {
+        max-width: 90%;
+        height: auto;
+        transition: all 0.3s ease;
+        border-radius: 50%;
+        z-index: 2;
+      }
+
+      .silhouette {
+        filter: brightness(0) !important;
+      }
+
+      .loader {
+        border: 5px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top: 5px solid var(--accent);
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+        position: absolute;
+        z-index: 1;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .game-btn {
+        border-radius: 12px;
+        padding: 0.8rem 1.2rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        border: none;
+        color: white;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+        position: relative;
+      }
+
+      .orange-btn {
+        background-color: var(--button-bg);
+        box-shadow: 0 6px 0 var(--button-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .orange-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 9px 0 var(--button-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .orange-btn:active {
+        transform: translateY(3px);
+        box-shadow: 0 3px 0 var(--button-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .green-btn {
+        background-color: var(--green-button-bg);
+        box-shadow: 0 6px 0 var(--green-button-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .green-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 9px 0 var(--green-button-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .green-btn:active {
+        transform: translateY(3px);
+        box-shadow: 0 3px 0 var(--green-button-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .blue-btn {
+        background-color: var(--panel-bg);
+        box-shadow: 0 6px 0 var(--panel-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .blue-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 9px 0 var(--panel-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .blue-btn:active {
+        transform: translateY(3px);
+        box-shadow: 0 3px 0 var(--panel-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .option-btn {
+        width: 100%;
+        font-size: 1.2rem;
+        margin-bottom: 0.7rem;
+        padding: 1rem;
+      }
+
+      #hint {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.6rem 1.5rem;
+      }
+
+      #difficulty {
+        background-color: var(--secondary);
+        color: white;
+        border-radius: 12px;
+        padding: 0.8rem 1.2rem;
+        border: none;
+        font-weight: 600;
+        box-shadow: 0 6px 0 #2c3b99, inset 0 0 10px rgba(255, 255, 255, 0.3);
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+        transition: all 0.2s ease;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+        padding-right: 2.5rem;
+      }
+
+      #difficulty:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 9px 0 #2c3b99, inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      #difficulty option {
+        background-color: var(--secondary);
+        color: white;
+        font-weight: 500;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .options-container {
+        margin-top: 1.5rem;
+      }
+
+      .level-badge {
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: var(--button-bg);
+        color: white;
+        border-radius: 20px;
+        padding: 0.3rem 1.5rem;
+        font-weight: bold;
+        box-shadow: 0 4px 0 var(--button-shadow);
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+        z-index: 10;
+      }
+
+      .stars-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+
+      .star {
+        color: var(--accent);
+        filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.2));
+        font-size: 2.5rem;
+        margin: 0 0.5rem;
+        transform-origin: center;
+      }
+
+      @keyframes starPulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .score-change {
+        position: absolute;
+        color: white;
+        font-weight: bold;
+        padding: 0.3rem 0.8rem;
+        border-radius: 10px;
+        animation: fadeUp 1s forwards;
+        z-index: 100;
+      }
+
+      .score-up {
+        background-color: var(--green-button-bg);
+      }
+
+      .score-down {
+        background-color: var(--primary);
+      }
+
+      @keyframes fadeUp {
+        0% {
+          opacity: 0;
+          transform: translateY(0);
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+      }
+
+      @keyframes bounceIn {
+        0% {
+          transform: scale(0.3);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        70% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .bounce-in {
+        animation: bounceIn 0.6s forwards;
+      }
+
+      .progress-bar {
+        height: 20px;
+        background-color: #e0e0e0;
+        border-radius: 10px;
+        margin: 1rem 0;
+        overflow: hidden;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          var(--green-button-bg),
+          var(--button-bg)
+        );
+        border-radius: 10px;
+        width: 0%;
+        transition: width 0.5s ease;
+      }
+
+      .gameplay-status {
+        text-align: center;
+        margin: 1rem 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+      }
+
+      /* Media queries for better mobile experience */
+      @media (max-width: 576px) {
+        .game-container {
+          padding: 1rem;
+        }
+
+        .game-panel {
+          padding: 1.2rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .pokemon-image-container {
+          width: 200px;
+          height: 200px;
+        }
+
+        .option-btn {
+          padding: 0.8rem;
+          font-size: 1rem;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        .controls {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+
+      /* Game Over Screen Enhancements */
+      .confetti {
+        position: absolute;
+        width: 10px;
+        height: 20px;
+        background-color: var(--accent);
+        opacity: 0.8;
+        z-index: 1;
+      }
+
+      .trophy {
+        font-size: 4rem;
+        color: var(--accent);
+        margin-bottom: 1rem;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .final-score-display {
+        background: linear-gradient(135deg, #ff9a3c, #ff5350);
+        color: white;
+        border-radius: 12px;
+        padding: 1rem 2rem;
+        font-size: 1.8rem;
+        margin: 1.5rem auto;
+        position: relative;
+        display: inline-block;
+        box-shadow: 0 8px 0 #c85c00, inset 0 0 20px rgba(255, 255, 255, 0.3);
+        overflow: hidden;
+        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+      }
+
+      .final-score-display::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0) 60%
+        );
+        border-radius: 12px;
+      }
+
+      .final-score-display #finalScore {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: var(--accent);
+        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+      }
+
+      .correct-answer-display {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        padding: 1rem;
+        margin: 1.5rem auto;
+        position: relative;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 80%;
+      }
+
+      .pokemon-reveal {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem 0;
+      }
+
+      #correct-pokemon-img {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        animation: bounce 1s ease infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .shine-effect {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.8) 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        opacity: 0;
+        animation: shine 3s ease-in-out infinite;
+      }
+
+      @keyframes shine {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0.5);
+        }
+        50% {
+          opacity: 0.7;
+          transform: scale(1.2);
+        }
+      }
+
+      .result-message {
+        margin-top: 1rem;
+        font-size: 1.4rem;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="game-container">
+      <div id="game">
+        <div class="game-panel position-relative">
+          <div class="level-badge" id="level-display">Level 1</div>
+          <h1 class="mb-3">Which Pokémon is it?</h1>
+          <div class="text-center">
+            <div class="score-container">
+              <h2 class="my-1">
+                Score: <span id="score" class="score-value">0</span>
+              </h2>
+            </div>
+          </div>
+
+          <div class="controls mt-4">
+            <select id="difficulty" class="form-select w-auto">
+              <option value="gen1">Gen 1</option>
+              <option value="gen2">Gen 2</option>
+              <option value="gen3">Gen 3</option>
+              <option value="gen4">Gen 4</option>
+              <option value="gen5">Gen 5</option>
+              <option value="gen6">Gen 6</option>
+            </select>
+
+            <button id="hint" class="game-btn green-btn">
+              <i class="fas fa-lightbulb"></i> Hint
+            </button>
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-fill" id="level-progress"></div>
+          </div>
+
+          <div class="pokemon-image-container">
+            <div class="loader" id="loader"></div>
+            <img
+              id="pokemon_image"
+              class="silhouette"
+              src=""
+              alt="Pokemon Image"
+            />
+          </div>
+
+          <div class="options-container">
+            <div class="row justify-content-center">
+              <div class="col-md-10">
+                <button class="game-btn orange-btn option-btn" id="option1">
+                  Option 1
+                </button>
+                <button class="game-btn blue-btn option-btn" id="option2">
+                  Option 2
+                </button>
+                <button class="game-btn green-btn option-btn" id="option3">
+                  Option 3
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="gameOver" class="game-panel text-center" style="display: none">
+        <div class="level-badge">Game Over</div>
+
+        <div id="confetti-container"></div>
+
+        <div class="stars-container">
+          <i class="fas fa-star star"></i>
+          <i class="fas fa-star star"></i>
+          <i class="fas fa-star star"></i>
+        </div>
+
+        <div class="trophy">
+          <i class="fas fa-trophy"></i>
+          <div class="shine-effect"></div>
+        </div>
+
+        <h1 class="mb-3">Game Over!</h1>
+
+        <div class="final-score-display">
+          <span id="finalScore">0</span> Points
+        </div>
+
+        <div class="correct-answer-display">
+          <div>The correct answer was:</div>
+          <div class="pokemon-reveal">
+            <img id="correct-pokemon-img" src="" alt="Correct Pokemon" />
+          </div>
+          <div><b id="correctName" class="fs-4"></b></div>
+        </div>
+
+        <div class="result-message" id="result-message">
+          Nice try! You'll get it next time!
+        </div>
+
+        <button class="game-btn green-btn mt-3" onclick="startGame()">
+          <i class="fas fa-redo-alt me-2"></i> Play Again!
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const mapping = {
+        "010": "Caterpie",
+        "011": "Metapod",
+        "012": "Butterfree",
+        "013": "Weedle",
+        "014": "Kakuna",
+        "015": "Beedrill",
+        "016": "Pidgey",
+        "017": "Pidgeotto",
+        "018": "Pidgeot",
+        "019": "Rattata",
+        344: "Claydol",
+        345: "Lileep",
+        346: "Cradily",
+        347: "Anorith",
+        340: "Whiscash",
+        341: "Corphish",
+        342: "Crawdaunt",
+        343: "Baltoy",
+        348: "Armaldo",
+        349: "Feebas",
+        595: "Joltik",
+        719: "Diancie",
+        718: "Zygarde",
+        717: "Yveltal",
+        716: "Xerneas",
+        715: "Noivern",
+        714: "Noibat",
+        713: "Avalugg",
+        712: "Bergmite",
+        711: "Gourgeist",
+        710: "Pumpkaboo",
+        606: "Beheeyem",
+        594: "Alomomola",
+        619: "Mienfoo",
+        298: "Azurill",
+        299: "Nosepass",
+        296: "Makuhita",
+        297: "Hariyama",
+        294: "Loudred",
+        295: "Exploud",
+        292: "Shedinja",
+        293: "Whismur",
+        290: "Nincada",
+        291: "Ninjask",
+        591: "Amoonguss",
+        590: "Foongus",
+        593: "Jellicent",
+        592: "Frillish",
+        199: "Slowking",
+        198: "Murkrow",
+        597: "Ferroseed",
+        596: "Galvantula",
+        195: "Quagsire",
+        194: "Wooper",
+        197: "Umbreon",
+        196: "Espeon",
+        191: "Sunkern",
+        190: "Aipom",
+        193: "Yanma",
+        192: "Sunflora",
+        270: "Lotad",
+        271: "Lombre",
+        272: "Ludicolo",
+        273: "Seedot",
+        274: "Nuzleaf",
+        275: "Shiftry",
+        276: "Taillow",
+        277: "Swellow",
+        278: "Wingull",
+        279: "Pelipper",
+        524: "Roggenrola",
+        525: "Boldore",
+        526: "Gigalith",
+        527: "Woobat",
+        520: "Tranquill",
+        521: "Unfezant",
+        522: "Blitzle",
+        523: "Zebstrika",
+        599: "Klink",
+        528: "Swoobat",
+        529: "Drilbur",
+        449: "Hippopotas",
+        448: "Lucario",
+        443: "Gible",
+        442: "Spiritomb",
+        441: "Chatot",
+        440: "Happiny",
+        447: "Riolu",
+        446: "Munchlax",
+        445: "Garchomp",
+        444: "Gabite",
+        108: "Lickitung",
+        109: "Koffing",
+        102: "Exeggcute",
+        103: "Exeggutor",
+        100: "Voltorb",
+        101: "Electrode",
+        106: "Hitmonlee",
+        107: "Hitmonchan",
+        104: "Cubone",
+        105: "Marowak",
+        601: "Klinklang",
+        641: "Tornadus",
+        640: "Virizion",
+        643: "Reshiram",
+        642: "Thundurus",
+        645: "Landorus",
+        644: "Zekrom",
+        438: "Bonsly",
+        439: "Mime Jr.",
+        436: "Bronzor",
+        437: "Bronzong",
+        434: "Stunky",
+        435: "Skuntank",
+        432: "Purugly",
+        433: "Chingling",
+        430: "Honchkrow",
+        431: "Glameow",
+        339: "Barboach",
+        338: "Solrock",
+        335: "Zangoose",
+        334: "Altaria",
+        337: "Lunatone",
+        336: "Seviper",
+        331: "Cacnea",
+        330: "Flygon",
+        333: "Swablu",
+        332: "Cacturne",
+        "058": "Growlithe",
+        "059": "Arcanine",
+        "054": "Psyduck",
+        "055": "Golduck",
+        "056": "Mankey",
+        "057": "Primeape",
+        "050": "Diglett",
+        "051": "Dugtrio",
+        "052": "Meowth",
+        "053": "Persian",
+        650: "Chespin",
+        559: "Scraggy",
+        558: "Crustle",
+        555: "Darmanitan",
+        554: "Darumaka",
+        557: "Dwebble",
+        556: "Maractus",
+        551: "Sandile",
+        550: "Basculin",
+        553: "Krookodile",
+        552: "Krokorok",
+        238: "Smoochum",
+        239: "Elekid",
+        234: "Stantler",
+        235: "Smeargle",
+        236: "Tyrogue",
+        237: "Hitmontop",
+        230: "Kingdra",
+        231: "Phanpy",
+        232: "Donphan",
+        233: "Porygon2",
+        614: "Beartic",
+        146: "Moltres",
+        147: "Dratini",
+        144: "Articuno",
+        145: "Zapdos",
+        142: "Aerodactyl",
+        143: "Snorlax",
+        140: "Kabuto",
+        141: "Kabutops",
+        612: "Haxorus",
+        613: "Cubchoo",
+        610: "Axew",
+        611: "Fraxure",
+        616: "Shelmet",
+        617: "Accelgor",
+        148: "Dragonair",
+        149: "Dragonite",
+        689: "Barbaracle",
+        688: "Binacle",
+        685: "Slurpuff",
+        684: "Swirlix",
+        687: "Malamar",
+        686: "Inkay",
+        681: "Aegislash",
+        680: "Doublade",
+        683: "Aromatisse",
+        682: "Spritzee",
+        "098": "Krabby",
+        "099": "Kingler",
+        622: "Golett",
+        "090": "Shellder",
+        "091": "Cloyster",
+        "092": "Gastly",
+        "093": "Haunter",
+        "094": "Gengar",
+        "095": "Onix",
+        "096": "Drowzee",
+        "097": "Hypno",
+        133: "Eevee",
+        132: "Ditto",
+        131: "Lapras",
+        130: "Gyarados",
+        137: "Porygon",
+        136: "Flareon",
+        135: "Jolteon",
+        134: "Vaporeon",
+        494: "Victini",
+        495: "Snivy",
+        139: "Omastar",
+        138: "Omanyte",
+        490: "Manaphy",
+        491: "Darkrai",
+        492: "Shaymin",
+        493: "Arceus",
+        407: "Roserade",
+        406: "Budew",
+        405: "Luxray",
+        404: "Luxio",
+        403: "Shinx",
+        402: "Kricketune",
+        401: "Kricketot",
+        400: "Bibarel",
+        629: "Vullaby",
+        409: "Rampardos",
+        408: "Cranidos",
+        628: "Braviary",
+        "025": "Pikachu",
+        "024": "Arbok",
+        "027": "Sandshrew",
+        "026": "Raichu",
+        "021": "Spearow",
+        "020": "Raticate",
+        "023": "Ekans",
+        "022": "Fearow",
+        "029": "Nidoran",
+        "028": "Sandslash",
+        379: "Registeel",
+        378: "Regice",
+        371: "Bagon",
+        370: "Luvdisc",
+        373: "Salamence",
+        372: "Shelgon",
+        375: "Metang",
+        374: "Beldum",
+        377: "Regirock",
+        376: "Metagross",
+        708: "Phantump",
+        709: "Trevenant",
+        704: "Goomy",
+        705: "Sliggoo",
+        706: "Goodra",
+        707: "Klefki",
+        700: "Sylveon",
+        618: "Stunfisk",
+        702: "Dedenne",
+        703: "Carbink",
+        393: "Piplup",
+        392: "Infernape",
+        391: "Monferno",
+        390: "Chimchar",
+        397: "Staravia",
+        396: "Starly",
+        395: "Empoleon",
+        394: "Prinplup",
+        399: "Bidoof",
+        398: "Staraptor",
+        607: "Litwick",
+        586: "Sawsbuck",
+        587: "Emolga",
+        584: "Vanilluxe",
+        585: "Deerling",
+        582: "Vanillite",
+        583: "Vanillish",
+        580: "Ducklett",
+        581: "Swanna",
+        588: "Karrablast",
+        589: "Escavalier",
+        245: "Suicune",
+        244: "Entei",
+        247: "Pupitar",
+        246: "Larvitar",
+        241: "Miltank",
+        240: "Magby",
+        243: "Raikou",
+        242: "Blissey",
+        615: "Cryogonal",
+        249: "Lugia",
+        248: "Tyranitar",
+        519: "Pidove",
+        518: "Musharna",
+        511: "Pansage",
+        510: "Liepard",
+        513: "Pansear",
+        512: "Simisage",
+        515: "Panpour",
+        514: "Simisear",
+        517: "Munna",
+        516: "Simipour",
+        458: "Mantyke",
+        459: "Snover",
+        621: "Druddigon",
+        620: "Mienshao",
+        627: "Rufflet",
+        626: "Bouffalant",
+        625: "Bisharp",
+        624: "Pawniard",
+        450: "Hippowdon",
+        451: "Skorupi",
+        452: "Drapion",
+        453: "Croagunk",
+        454: "Toxicroak",
+        455: "Carnivine",
+        456: "Finneon",
+        457: "Lumineon",
+        179: "Mareep",
+        178: "Xatu",
+        177: "Natu",
+        176: "Togetic",
+        175: "Togepi",
+        174: "Igglybuff",
+        173: "Cleffa",
+        172: "Pichu",
+        171: "Lanturn",
+        170: "Chinchou",
+        656: "Froakie",
+        657: "Frogadier",
+        654: "Braixen",
+        182: "Bellossom",
+        183: "Marill",
+        180: "Flaaffy",
+        181: "Ampharos",
+        186: "Politoed",
+        187: "Hoppip",
+        184: "Azumarill",
+        185: "Sudowoodo",
+        652: "Chesnaught",
+        188: "Skiploom",
+        189: "Jumpluff",
+        658: "Greninja",
+        653: "Fennekin",
+        "061": "Poliwhirl",
+        "060": "Poliwag",
+        "063": "Abra",
+        "062": "Poliwrath",
+        "065": "Alakazam",
+        "064": "Kadabra",
+        "067": "Machoke",
+        "066": "Machop",
+        "069": "Bellsprout",
+        "068": "Machamp",
+        651: "Quilladin",
+        659: "Bunnelby",
+        649: "Genesect",
+        496: "Servine",
+        322: "Numel",
+        323: "Camerupt",
+        320: "Wailmer",
+        321: "Wailord",
+        326: "Grumpig",
+        327: "Spinda",
+        324: "Torkoal",
+        325: "Spoink",
+        328: "Trapinch",
+        329: "Vibrava",
+        201: "Unown",
+        200: "Misdreavus",
+        203: "Girafarig",
+        202: "Wobbuffet",
+        205: "Forretress",
+        204: "Pineco",
+        207: "Gligar",
+        206: "Dunsparce",
+        209: "Snubbull",
+        208: "Steelix",
+        655: "Delphox",
+        669: "Flabb",
+        668: "Pyroar",
+        667: "Litleo",
+        666: "Vivillon",
+        665: "Spewpa",
+        664: "Scatterbug",
+        663: "Talonflame",
+        662: "Fletchinder",
+        661: "Fletchling",
+        660: "Diggersby",
+        692: "Clauncher",
+        693: "Clawitzer",
+        690: "Skrelp",
+        691: "Dragalge",
+        696: "Tyrunt",
+        697: "Tyrantrum",
+        694: "Helioptile",
+        695: "Heliolisk",
+        698: "Amaura",
+        699: "Aurorus",
+        623: "Golurk",
+        542: "Leavanny",
+        543: "Venipede",
+        540: "Sewaddle",
+        541: "Swadloon",
+        546: "Cottonee",
+        547: "Whimsicott",
+        544: "Whirlipede",
+        545: "Scolipede",
+        548: "Petilil",
+        549: "Lilligant",
+        598: "Ferrothorn",
+        120: "Staryu",
+        121: "Starmie",
+        122: "Mr. Mime",
+        123: "Scyther",
+        124: "Jynx",
+        125: "Electabuzz",
+        126: "Magmar",
+        127: "Pinsir",
+        128: "Tauros",
+        129: "Magikarp",
+        414: "Mothim",
+        415: "Combee",
+        416: "Vespiquen",
+        417: "Pachirisu",
+        410: "Shieldon",
+        411: "Bastiodon",
+        412: "Burmy",
+        413: "Wormadam",
+        498: "Tepig",
+        418: "Buizel",
+        419: "Floatzel",
+        499: "Pignite",
+        319: "Sharpedo",
+        318: "Carvanha",
+        313: "Volbeat",
+        312: "Minun",
+        311: "Plusle",
+        310: "Manectric",
+        317: "Swalot",
+        316: "Gulpin",
+        315: "Roselia",
+        314: "Illumise",
+        "038": "Ninetales",
+        "039": "Jigglypuff",
+        "032": "Nidoran",
+        "033": "Nidorino",
+        "030": "Nidorina",
+        "031": "Nidoqueen",
+        "036": "Clefable",
+        "037": "Vulpix",
+        "034": "Nidoking",
+        "035": "Clefairy",
+        497: "Serperior",
+        368: "Gorebyss",
+        369: "Relicanth",
+        366: "Clamperl",
+        367: "Huntail",
+        364: "Sealeo",
+        365: "Walrein",
+        362: "Glalie",
+        363: "Spheal",
+        360: "Wynaut",
+        361: "Snorunt",
+        380: "Latias",
+        381: "Latios",
+        382: "Kyogre",
+        383: "Groudon",
+        384: "Rayquaza",
+        385: "Jirachi",
+        386: "Deoxys",
+        387: "Turtwig",
+        388: "Grotle",
+        389: "Torterra",
+        605: "Elgyem",
+        579: "Reuniclus",
+        578: "Duosion",
+        604: "Eelektross",
+        573: "Cinccino",
+        572: "Minccino",
+        571: "Zoroark",
+        570: "Zorua",
+        577: "Solosis ",
+        576: "Gothitelle",
+        575: "Gothorita",
+        574: "Gothita",
+        258: "Mudkip",
+        259: "Marshtomp",
+        252: "Treecko",
+        253: "Grovyle",
+        250: "Ho-Oh",
+        251: "Celebi",
+        256: "Combusken",
+        257: "Blaziken",
+        254: "Sceptile",
+        255: "Torchic",
+        603: "Eelektrik",
+        602: "Tynamo",
+        508: "Stoutland",
+        509: "Purrloin",
+        506: "Lillipup",
+        507: "Herdier",
+        504: "Patrat",
+        505: "Watchog",
+        502: "Dewott",
+        503: "Samurott",
+        500: "Emboar",
+        501: "Oshawott",
+        630: "Mandibuzz",
+        631: "Heatmor",
+        632: "Durant",
+        633: "Deino",
+        469: "Yanmega",
+        468: "Togekiss",
+        636: "Larvesta",
+        637: "Volcarona",
+        465: "Tangrowth",
+        464: "Rhyperior",
+        467: "Magmortar",
+        466: "Electivire",
+        461: "Weavile",
+        460: "Abomasnow",
+        463: "Lickilicky",
+        462: "Magnezone",
+        168: "Ariados",
+        169: "Crobat",
+        164: "Noctowl",
+        165: "Ledyba",
+        166: "Ledian",
+        167: "Spinarak",
+        160: "Feraligatr",
+        161: "Sentret",
+        162: "Furret",
+        163: "Hoothoot",
+        "076": "Golem",
+        "077": "Ponyta",
+        "074": "Geodude",
+        "075": "Graveler",
+        "072": "Tentacool",
+        "073": "Tentacruel",
+        "070": "Weepinbell",
+        "071": "Victreebel",
+        "078": "Rapidash",
+        "079": "Slowpoke",
+        600: "Klang",
+        647: "Keldeo",
+        646: "Kyurem",
+        "003": "Venusaur",
+        "002": "Ivysaur",
+        "001": "Bulbasaur",
+        "007": "Squirtle",
+        "006": "Charizard",
+        "005": "Charmeleon",
+        "004": "Charmander",
+        "009": "Blastoise",
+        "008": "Wartortle",
+        357: "Tropius",
+        356: "Dusclops",
+        355: "Duskull",
+        354: "Banette",
+        353: "Shuppet",
+        352: "Kecleon",
+        351: "Castform",
+        350: "Milotic",
+        359: "Absol",
+        358: "Chimecho",
+        216: "Teddiursa",
+        217: "Ursaring",
+        214: "Heracross",
+        215: "Sneasel",
+        212: "Scizor",
+        213: "Shuckle",
+        210: "Granbull",
+        211: "Qwilfish",
+        218: "Slugma",
+        219: "Magcargo",
+        289: "Slaking",
+        288: "Vigoroth",
+        281: "Kirlia",
+        280: "Ralts",
+        283: "Surskit",
+        282: "Gardevoir",
+        285: "Shroomish",
+        284: "Masquerain",
+        287: "Slakoth",
+        286: "Breloom",
+        678: "Meowstic",
+        679: "Honedge",
+        674: "Pancham",
+        675: "Pangoro",
+        676: "Furfrou",
+        677: "Espurr",
+        670: "Floette",
+        671: "Florges",
+        672: "Skiddo",
+        673: "Gogoat",
+        263: "Zigzagoon",
+        262: "Mightyena",
+        261: "Poochyena",
+        260: "Swampert",
+        267: "Beautifly",
+        266: "Silcoon",
+        265: "Wurmple",
+        264: "Linoone",
+        269: "Dustox",
+        268: "Cascoon",
+        701: "Hawlucha",
+        537: "Seismitoad",
+        536: "Palpitoad",
+        535: "Tympole",
+        534: "Conkeldurr",
+        533: "Gurdurr",
+        532: "Timburr",
+        531: "Audino",
+        530: "Excadrill",
+        539: "Sawk",
+        538: "Throh",
+        115: "Kangaskhan",
+        114: "Tangela",
+        117: "Seadra",
+        116: "Horsea",
+        111: "Rhyhorn",
+        110: "Weezing",
+        113: "Chansey",
+        112: "Rhydon",
+        119: "Seaking",
+        118: "Goldeen",
+        429: "Mismagius",
+        428: "Lopunny",
+        421: "Cherrim",
+        420: "Cherubi",
+        423: "Gastrodon",
+        422: "Shellos",
+        425: "Drifloon",
+        424: "Ambipom",
+        427: "Buneary",
+        426: "Drifblim",
+        308: "Medicham",
+        309: "Electrike",
+        300: "Skitty",
+        301: "Delcatty",
+        302: "Sableye",
+        303: "Mawile",
+        304: "Aron",
+        305: "Lairon",
+        306: "Aggron",
+        307: "Meditite",
+        "049": "Venomoth",
+        "048": "Venonat",
+        "047": "Parasect",
+        "046": "Paras",
+        "045": "Vileplume",
+        "044": "Gloom",
+        "043": "Oddish",
+        "042": "Golbat",
+        "041": "Zubat",
+        "040": "Wigglytuff",
+        648: "Meloetta",
+        568: "Trubbish",
+        569: "Garbodor",
+        560: "Scrafty",
+        561: "Sigilyph",
+        562: "Yamask",
+        563: "Cofagrigus",
+        564: "Tirtouga",
+        565: "Carracosta",
+        566: "Archen",
+        567: "Archeops",
+        229: "Houndoom",
+        228: "Houndour",
+        227: "Skarmory",
+        226: "Mantine",
+        225: "Delibird",
+        224: "Octillery",
+        223: "Remoraid",
+        222: "Corsola",
+        221: "Piloswine",
+        220: "Swinub",
+        720: "Hoopa",
+        151: "Mew",
+        150: "Mewtwo",
+        153: "Bayleef",
+        152: "Chikorita",
+        155: "Cyndaquil",
+        154: "Meganium",
+        157: "Typhlosion",
+        156: "Quilava",
+        159: "Croconaw",
+        158: "Totodile",
+        609: "Chandelure",
+        608: "Lampent",
+        634: "Zweilous",
+        635: "Hydreigon",
+        638: "Cobalion",
+        639: "Terrakion",
+        "089": "Muk",
+        "088": "Grimer",
+        "083": "Farfetch'd",
+        "082": "Magneton",
+        "081": "Magnemite",
+        "080": "Slowbro",
+        "087": "Dewgong",
+        "086": "Seel",
+        "085": "Dodrio",
+        "084": "Doduo",
+        489: "Phione",
+        488: "Cresselia",
+        487: "Giratina",
+        486: "Regigigas",
+        485: "Heatran",
+        484: "Palkia",
+        483: "Dialga",
+        482: "Azelf",
+        481: "Mesprit",
+        480: "Uxie",
+        472: "Gliscor",
+        473: "Mamoswine",
+        470: "Leafeon",
+        471: "Glaceon",
+        476: "Probopass",
+        477: "Dusknoir",
+        474: "Porygon-Z",
+        475: "Gallade",
+        478: "Froslass",
+        479: "Rotom",
+      };
+
+      let score = 0;
+      let hidden = true;
+      let currentPokemon = "";
+      let currentAnswer = "";
+      let difficulty = "gen1";
+      let level = 1;
+      let correctAnswers = 0;
+
+      // Add a new array to track shown Pokémon
+      let shownPokemon = [];
+
+      // Track best score using localStorage
+      let bestScore = localStorage.getItem("pokemonBestScore") || 0;
+
+      function padNum(n) {
+        return n.toString().padStart(3, "0");
+      }
+
+      function getMaxDex() {
+        return {
+          gen1: 151,
+          gen2: 251,
+          gen3: 386,
+          gen4: 493,
+          gen5: 649,
+          gen6: 720,
+        }[difficulty];
+      }
+
+      // Function to check if we've run out of available Pokémon
+      function resetShownPokemonIfNeeded(maxDex) {
+        const availablePokemon = Object.keys(mapping).filter((key) => {
+          const dexNum = parseInt(key);
+          return !isNaN(dexNum) && dexNum <= maxDex;
+        }).length;
+
+        // If we've shown 80% of available Pokémon, reset the tracking
+        if (shownPokemon.length >= availablePokemon * 0.8) {
+          shownPokemon = [];
+        }
+      }
+
+      function showScoreChange(isCorrect) {
+        const element = document.createElement("div");
+        element.classList.add("score-change");
+
+        if (isCorrect) {
+          element.classList.add("score-up");
+          element.textContent = "+1";
+        } else {
+          element.classList.add("score-down");
+          element.textContent = "-3";
+        }
+
+        // Position it randomly within the game panel
+        const panel = document.querySelector(".game-panel");
+        const rect = panel.getBoundingClientRect();
+
+        const randomX = Math.floor(Math.random() * (rect.width - 100)) + 50;
+        const randomY = Math.floor(Math.random() * (rect.height - 100)) + 50;
+
+        element.style.left = `${randomX}px`;
+        element.style.top = `${randomY}px`;
+
+        panel.appendChild(element);
+
+        // Remove the element after animation completes
+        setTimeout(() => {
+          element.remove();
+        }, 1000);
+      }
+
+      function updateLevel() {
+        if (correctAnswers >= 5) {
+          level++;
+          correctAnswers = 0;
+          document.getElementById(
+            "level-display"
+          ).textContent = `Level ${level}`;
+
+          // Flash the level badge
+          const badge = document.getElementById("level-display");
+          badge.style.transform = "translateX(-50%) scale(1.3)";
+          badge.style.backgroundColor = "#4cd964";
+
+          setTimeout(() => {
+            badge.style.transform = "translateX(-50%) scale(1)";
+            badge.style.backgroundColor = "";
+          }, 700);
+        }
+
+        // Update progress bar
+        const progressFill = document.getElementById("level-progress");
+        progressFill.style.width = `${(correctAnswers / 5) * 100}%`;
+      }
+
+      function generateImage() {
+        // Show loader
+        document.getElementById("loader").style.display = "block";
+
+        const clonedMapping = { ...mapping };
+        const maxDex = getMaxDex();
+
+        // Check if we need to reset the shown Pokémon list
+        resetShownPokemonIfNeeded(maxDex);
+
+        // Try to find a Pokémon that hasn't been shown yet
+        let numStr;
+        let correct;
+        let attempts = 0;
+        const maxAttempts = 100; // Safety to prevent infinite loops
+
+        do {
+          const rand = Math.floor(Math.random() * maxDex) + 1;
+          numStr = padNum(rand);
+          correct = clonedMapping[numStr];
+          attempts++;
+
+          // Break the loop if we can't find a new Pokémon after several attempts
+          if (attempts >= maxAttempts) {
+            // Reset shown Pokémon and try again with a fresh random choice
+            shownPokemon = [];
+            const rand = Math.floor(Math.random() * maxDex) + 1;
+            numStr = padNum(rand);
+            correct = clonedMapping[numStr];
+            break;
+          }
+        } while (!correct || shownPokemon.includes(numStr));
+
+        // Add this Pokémon to our shown list
+        shownPokemon.push(numStr);
+
+        delete clonedMapping[numStr];
+
+        const keys = Object.keys(clonedMapping);
+        const wrong1 =
+          clonedMapping[keys[Math.floor(Math.random() * keys.length)]];
+        const wrong2 =
+          clonedMapping[keys[Math.floor(Math.random() * keys.length)]];
+
+        const options = [correct, wrong1, wrong2].sort(
+          () => 0.5 - Math.random()
+        );
+
+        const pokemonImg = document.getElementById("pokemon_image");
+
+        // Create a new image object to preload
+        const img = new Image();
+        img.onload = function () {
+          // Hide loader when image is loaded
+          document.getElementById("loader").style.display = "none";
+          pokemonImg.src = this.src;
+          pokemonImg.classList.add("bounce-in");
+
+          // Apply silhouette if hidden
+          pokemonImg.className = hidden ? "silhouette bounce-in" : "bounce-in";
+
+          setTimeout(() => {
+            pokemonImg.classList.remove("bounce-in");
+          }, 600);
+        };
+
+        img.src = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${numStr}.png`;
+
+        document.getElementById("option1").innerText = options[0];
+        document.getElementById("option2").innerText = options[1];
+        document.getElementById("option3").innerText = options[2];
+        currentAnswer = correct;
+        currentPokemon = correct;
+      }
+
+      function startGame() {
+        document.getElementById("game").style.display = "block";
+        document.getElementById("gameOver").style.display = "none";
+        score = 0;
+        level = 1;
+        correctAnswers = 0;
+        hidden = true;
+        // Reset shown Pokémon list when starting a new game
+        shownPokemon = [];
+        document.getElementById("score").innerText = score;
+        document.getElementById("level-display").textContent = `Level ${level}`;
+        document.getElementById("level-progress").style.width = "0%";
+        generateImage();
+
+        // Animate stars on game restart
+        document.querySelectorAll(".star").forEach((star, index) => {
+          star.style.animation = "none";
+          setTimeout(() => {
+            star.style.animation = `starPulse 2s infinite ${index * 0.3}s`;
+          }, 10);
+        });
+      }
+
+      function createConfetti() {
+        const container = document.getElementById("confetti-container");
+        container.innerHTML = "";
+        const colors = ["#ff5350", "#3b4cca", "#ffde00", "#4cd964", "#ff9a3c"];
+
+        for (let i = 0; i < 50; i++) {
+          const confetti = document.createElement("div");
+          confetti.className = "confetti";
+          confetti.style.left = Math.random() * 100 + "%";
+          confetti.style.top = Math.random() * 40 - 10 + "%";
+          confetti.style.backgroundColor =
+            colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.width = Math.random() * 8 + 5 + "px";
+          confetti.style.height = Math.random() * 15 + 10 + "px";
+          confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+          confetti.style.animation = `fadeUp ${
+            Math.random() * 2 + 2
+          }s forwards`;
+          container.appendChild(confetti);
+        }
+      }
+
+      function getResultMessage(score) {
+        if (score === 0) {
+          return "Don't give up! Everyone starts somewhere!";
+        } else if (score < 5) {
+          return "Nice try! You're getting the hang of it!";
+        } else if (score < 10) {
+          return "Good job! You're becoming a Pokémon expert!";
+        } else if (score < 15) {
+          return "Impressive! Professor Oak would be proud!";
+        } else {
+          return "Amazing! You're a true Pokémon Master!";
+        }
+      }
+
+      function checkAnswer(selected) {
+        if (selected === currentAnswer) {
+          score++;
+          correctAnswers++;
+          document.getElementById("score").innerText = score;
+          showScoreChange(true);
+          updateLevel();
+          generateImage();
+        } else {
+          // Update best score
+          if (score > bestScore) {
+            bestScore = score;
+            localStorage.setItem("pokemonBestScore", bestScore);
+          }
+
+          document.getElementById("game").style.display = "none";
+          document.getElementById("gameOver").style.display = "block";
+          document.getElementById("correctName").innerText = currentPokemon;
+          document.getElementById("finalScore").innerText = score;
+          document.getElementById("result-message").innerText =
+            getResultMessage(score);
+
+          // Show the correct Pokemon image
+          const numStr = Object.keys(mapping).find(
+            (key) => mapping[key] === currentPokemon
+          );
+          document.getElementById(
+            "correct-pokemon-img"
+          ).src = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${numStr}.png`;
+
+          // Create confetti effect
+          createConfetti();
+
+          // Animate stars on game over
+          document.querySelectorAll(".star").forEach((star, index) => {
+            star.style.animation = `starPulse 2s infinite ${index * 0.3}s`;
+          });
+        }
+      }
+
+      document.getElementById("difficulty").addEventListener("change", (e) => {
+        difficulty = e.target.value;
+        score = 0;
+        level = 1;
+        correctAnswers = 0;
+        // Reset shown Pokémon when changing difficulty
+        shownPokemon = [];
+        document.getElementById("score").innerText = score;
+        document.getElementById("level-display").textContent = `Level ${level}`;
+        document.getElementById("level-progress").style.width = "0%";
+        hidden = true;
+        generateImage();
+      });
+
+      document.getElementById("hint").addEventListener("click", () => {
+        hidden = !hidden;
+        document.getElementById("pokemon_image").className = hidden
+          ? "silhouette"
+          : "";
+      });
+
+      ["option1", "option2", "option3"].forEach((id) => {
+        document.getElementById(id).addEventListener("click", (e) => {
+          checkAnswer(e.target.innerText);
+        });
+      });
+
+      // Start game on load
+      window.onload = startGame;
+    </script>
+  </body>
 </html>
