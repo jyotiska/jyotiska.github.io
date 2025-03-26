@@ -67,12 +67,16 @@
         max-width: 800px;
         margin: 0 auto;
         padding: 2rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
 
       .game-panel {
         background-color: var(--panel-bg);
         border-radius: 12px;
-        padding: 1.5rem;
+        padding: 2.5rem 1.5rem 1.5rem;
         box-shadow: 0 8px 0 var(--panel-shadow), 0 0 0 5px var(--panel-border);
         position: relative;
         margin-bottom: 2rem;
@@ -106,7 +110,8 @@
         text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
         text-align: center;
         letter-spacing: 2px;
-        margin-bottom: 0.8rem;
+        margin: 0.5rem 0 1.5rem;
+        padding: 0.5rem;
       }
 
       .score-container {
@@ -441,10 +446,12 @@
       @media (max-width: 576px) {
         .game-container {
           padding: 1rem;
+          justify-content: flex-start;
+          padding-top: 2rem;
         }
 
         .game-panel {
-          padding: 1.2rem;
+          padding: 2rem 1.2rem 1.2rem;
           margin-bottom: 1.5rem;
         }
 
@@ -459,13 +466,10 @@
         }
 
         h1 {
-          font-size: 1.8rem;
-        }
-
-        /* Update mobile heading size */
-        h1 {
           font-size: 2.2rem;
           text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+          margin: 0.3rem 0 1.2rem;
+          padding: 0.3rem;
         }
 
         .controls {
