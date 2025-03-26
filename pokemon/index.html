@@ -16,6 +16,15 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+
+    <!-- Add Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <style>
       :root {
         --primary: #ff5350;
@@ -37,11 +46,16 @@
         --green-button-bg: #4cd964;
         --green-button-border: #3aaa4e;
         --green-button-shadow: #2a8339;
+
+        /* Font variables */
+        --heading-font: "Bangers", cursive;
+        --body-font: "Poppins", sans-serif;
+        --button-font: "Montserrat", sans-serif;
       }
 
       body {
         background-color: #f5f5f5;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: var(--body-font);
         padding: 0;
         margin: 0;
         min-height: 100vh;
@@ -87,8 +101,12 @@
       h1 {
         color: white;
         font-weight: 700;
-        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+        font-family: var(--heading-font);
+        font-size: 2.8rem;
+        text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
         text-align: center;
+        letter-spacing: 2px;
+        margin-bottom: 0.8rem;
       }
 
       .score-container {
@@ -124,6 +142,7 @@
       .score-value {
         font-size: 2rem;
         font-weight: bold;
+        font-family: var(--heading-font);
         color: var(--accent);
         text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
       }
@@ -178,6 +197,7 @@
         border-radius: 12px;
         padding: 0.8rem 1.2rem;
         font-weight: 600;
+        font-family: var(--button-font);
         transition: all 0.2s ease;
         border: none;
         color: white;
@@ -222,21 +242,18 @@
       }
 
       .blue-btn {
-        background-color: var(--panel-bg);
-        box-shadow: 0 6px 0 var(--panel-shadow),
-          inset 0 0 10px rgba(255, 255, 255, 0.3);
+        background-color: #6b6ff8;
+        box-shadow: 0 6px 0 #4f4fb8, inset 0 0 10px rgba(255, 255, 255, 0.3);
       }
 
       .blue-btn:hover {
         transform: translateY(-3px);
-        box-shadow: 0 9px 0 var(--panel-shadow),
-          inset 0 0 10px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 9px 0 #4f4fb8, inset 0 0 10px rgba(255, 255, 255, 0.3);
       }
 
       .blue-btn:active {
         transform: translateY(3px);
-        box-shadow: 0 3px 0 var(--panel-shadow),
-          inset 0 0 10px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 3px 0 #4f4fb8, inset 0 0 10px rgba(255, 255, 255, 0.3);
       }
 
       .option-btn {
@@ -261,6 +278,7 @@
         padding: 0.8rem 1.2rem;
         border: none;
         font-weight: 600;
+        font-family: var(--button-font);
         box-shadow: 0 6px 0 #2c3b99, inset 0 0 10px rgba(255, 255, 255, 0.3);
         text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
         transition: all 0.2s ease;
@@ -304,6 +322,7 @@
         border-radius: 20px;
         padding: 0.3rem 1.5rem;
         font-weight: bold;
+        font-family: var(--button-font);
         box-shadow: 0 4px 0 var(--button-shadow);
         text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
         z-index: 10;
@@ -402,14 +421,11 @@
 
       .progress-fill {
         height: 100%;
-        background: linear-gradient(
-          to right,
-          var(--green-button-bg),
-          var(--button-bg)
-        );
+        background: linear-gradient(to right, #ff9500, #d442f5);
         border-radius: 10px;
         width: 0%;
         transition: width 0.5s ease;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
       }
 
       .gameplay-status {
@@ -444,6 +460,12 @@
 
         h1 {
           font-size: 1.8rem;
+        }
+
+        /* Update mobile heading size */
+        h1 {
+          font-size: 2.2rem;
+          text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
         }
 
         .controls {
@@ -489,6 +511,7 @@
         border-radius: 12px;
         padding: 1rem 2rem;
         font-size: 1.8rem;
+        font-family: var(--body-font);
         margin: 1.5rem auto;
         position: relative;
         display: inline-block;
@@ -515,6 +538,7 @@
       .final-score-display #finalScore {
         font-size: 2.5rem;
         font-weight: bold;
+        font-family: var(--heading-font);
         color: var(--accent);
         text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
       }
@@ -585,6 +609,7 @@
       .result-message {
         margin-top: 1rem;
         font-size: 1.4rem;
+        font-family: var(--heading-font);
         color: white;
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
       }
@@ -653,8 +678,6 @@
 
       <div id="gameOver" class="game-panel text-center" style="display: none">
         <div class="level-badge">Game Over</div>
-
-        <div id="confetti-container"></div>
 
         <div class="stars-container">
           <i class="fas fa-star star"></i>
@@ -1549,11 +1572,22 @@
 
         delete clonedMapping[numStr];
 
-        const keys = Object.keys(clonedMapping);
+        // Get only Pokémon from the current generation and lower
+        const genPokemon = {};
+        Object.keys(clonedMapping).forEach((key) => {
+          const dexNum = parseInt(key);
+          if (!isNaN(dexNum) && dexNum <= maxDex) {
+            genPokemon[key] = clonedMapping[key];
+          }
+        });
+
+        const genKeys = Object.keys(genPokemon);
+
+        // Get two wrong options only from the selected gen and lower
         const wrong1 =
-          clonedMapping[keys[Math.floor(Math.random() * keys.length)]];
+          genPokemon[genKeys[Math.floor(Math.random() * genKeys.length)]];
         const wrong2 =
-          clonedMapping[keys[Math.floor(Math.random() * keys.length)]];
+          genPokemon[genKeys[Math.floor(Math.random() * genKeys.length)]];
 
         const options = [correct, wrong1, wrong2].sort(
           () => 0.5 - Math.random()
@@ -1609,28 +1643,6 @@
         });
       }
 
-      function createConfetti() {
-        const container = document.getElementById("confetti-container");
-        container.innerHTML = "";
-        const colors = ["#ff5350", "#3b4cca", "#ffde00", "#4cd964", "#ff9a3c"];
-
-        for (let i = 0; i < 50; i++) {
-          const confetti = document.createElement("div");
-          confetti.className = "confetti";
-          confetti.style.left = Math.random() * 100 + "%";
-          confetti.style.top = Math.random() * 40 - 10 + "%";
-          confetti.style.backgroundColor =
-            colors[Math.floor(Math.random() * colors.length)];
-          confetti.style.width = Math.random() * 8 + 5 + "px";
-          confetti.style.height = Math.random() * 15 + 10 + "px";
-          confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-          confetti.style.animation = `fadeUp ${
-            Math.random() * 2 + 2
-          }s forwards`;
-          container.appendChild(confetti);
-        }
-      }
-
       function getResultMessage(score) {
         if (score === 0) {
           return "Don't give up! Everyone starts somewhere!";
@@ -1674,9 +1686,6 @@
           document.getElementById(
             "correct-pokemon-img"
           ).src = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${numStr}.png`;
-
-          // Create confetti effect
-          createConfetti();
 
           // Animate stars on game over
           document.querySelectorAll(".star").forEach((star, index) => {
