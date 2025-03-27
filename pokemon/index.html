@@ -545,6 +545,7 @@
         font-family: var(--heading-font);
         color: var(--accent);
         text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+        margin-right: 10px;
       }
 
       .correct-answer-display {
@@ -697,7 +698,7 @@
         <h1 class="mb-3">Game Over!</h1>
 
         <div class="final-score-display">
-          <span id="finalScore">0</span> Points
+          <span id="finalScore">0</span> <span id="points-text">Points</span>
         </div>
 
         <div class="correct-answer-display">
@@ -1680,6 +1681,11 @@
           document.getElementById("gameOver").style.display = "block";
           document.getElementById("correctName").innerText = currentPokemon;
           document.getElementById("finalScore").innerText = score;
+
+          // Set singular or plural for points text
+          const pointsText = score <= 1 ? "Point" : "Points";
+          document.getElementById("points-text").innerText = pointsText;
+
           document.getElementById("result-message").innerText =
             getResultMessage(score);
 
