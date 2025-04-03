@@ -46,6 +46,9 @@
         --green-button-bg: #4cd964;
         --green-button-border: #3aaa4e;
         --green-button-shadow: #2a8339;
+        --sound-button-bg: #5ac8fa;
+        --sound-button-border: #41a8d8;
+        --sound-button-shadow: #2d88b8;
 
         /* Font variables */
         --heading-font: "Bangers", cursive;
@@ -259,6 +262,24 @@
       .blue-btn:active {
         transform: translateY(3px);
         box-shadow: 0 3px 0 #4f4fb8, inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .sound-btn {
+        background-color: var(--sound-button-bg);
+        box-shadow: 0 6px 0 var(--sound-button-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .sound-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 9px 0 var(--sound-button-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+
+      .sound-btn:active {
+        transform: translateY(3px);
+        box-shadow: 0 3px 0 var(--sound-button-shadow),
+          inset 0 0 10px rgba(255, 255, 255, 0.3);
       }
 
       .option-btn {
@@ -621,6 +642,23 @@
     </style>
   </head>
   <body>
+    <!-- Add audio elements for sound effects -->
+    <audio
+      id="correct-sound"
+      src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"
+      preload="auto"
+    ></audio>
+    <audio
+      id="levelup-sound"
+      src="https://assets.mixkit.co/active_storage/sfx/2020/2020-preview.mp3"
+      preload="auto"
+    ></audio>
+    <audio
+      id="wrong-sound"
+      src="https://assets.mixkit.co/active_storage/sfx/2053/2053-preview.mp3"
+      preload="auto"
+    ></audio>
+
     <div class="game-container">
       <div id="game">
         <div class="game-panel position-relative">
@@ -646,6 +684,10 @@
 
             <button id="hint" class="game-btn green-btn">
               <i class="fas fa-lightbulb"></i> Hint
+            </button>
+
+            <button id="sound-toggle" class="game-btn sound-btn">
+              <i class="fas fa-volume-up"></i> Sound On
             </button>
           </div>
 
@@ -1457,6 +1499,24 @@
       // Track best score using localStorage
       let bestScore = localStorage.getItem("pokemonBestScore") || 0;
 
+      // Track sound state and load from localStorage if available
+      let soundEnabled =
+        localStorage.getItem("pokemonSoundEnabled") !== "false";
+
+      // Update sound button display on load
+      function updateSoundButtonDisplay() {
+        const soundBtn = document.getElementById("sound-toggle");
+        if (soundEnabled) {
+          soundBtn.innerHTML = '<i class="fas fa-volume-up"></i> Sound On';
+          soundBtn.classList.remove("orange-btn");
+          soundBtn.classList.add("sound-btn");
+        } else {
+          soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i> Sound Off';
+          soundBtn.classList.remove("sound-btn");
+          soundBtn.classList.add("orange-btn");
+        }
+      }
+
       function padNum(n) {
         return n.toString().padStart(3, "0");
       }
@@ -1515,6 +1575,17 @@
         }, 1000);
       }
 
+      // Function to play sound effects
+      function playSound(id) {
+        if (soundEnabled) {
+          const sound = document.getElementById(id);
+          if (sound) {
+            sound.currentTime = 0; // Reset to start
+            sound.play().catch((e) => console.log("Error playing sound:", e));
+          }
+        }
+      }
+
       function updateLevel() {
         if (correctAnswers >= 5) {
           level++;
@@ -1522,6 +1593,9 @@
           document.getElementById(
             "level-display"
           ).textContent = `Level ${level}`;
+
+          // Play level up sound
+          playSound("levelup-sound");
 
           // Flash the level badge
           const badge = document.getElementById("level-display");
@@ -1668,9 +1742,16 @@
           correctAnswers++;
           document.getElementById("score").innerText = score;
           showScoreChange(true);
+
+          // Play correct answer sound
+          playSound("correct-sound");
+
           updateLevel();
           generateImage();
         } else {
+          // Play wrong answer sound
+          playSound("wrong-sound");
+
           // Update best score
           if (score > bestScore) {
             bestScore = score;
@@ -1679,6 +1760,7 @@
 
           document.getElementById("game").style.display = "none";
           document.getElementById("gameOver").style.display = "block";
+
           document.getElementById("correctName").innerText = currentPokemon;
           document.getElementById("finalScore").innerText = score;
 
@@ -1725,6 +1807,21 @@
           : "";
       });
 
+      // Add sound toggle functionality
+      document.getElementById("sound-toggle").addEventListener("click", () => {
+        soundEnabled = !soundEnabled;
+
+        // Save sound preference to localStorage
+        localStorage.setItem("pokemonSoundEnabled", soundEnabled);
+
+        updateSoundButtonDisplay();
+
+        // Play a sound when turning sound on to confirm it works
+        if (soundEnabled) {
+          playSound("correct-sound");
+        }
+      });
+
       ["option1", "option2", "option3"].forEach((id) => {
         document.getElementById(id).addEventListener("click", (e) => {
           checkAnswer(e.target.innerText);
@@ -1732,7 +1829,39 @@
       });
 
       // Start game on load
-      window.onload = startGame;
+      window.onload = function () {
+        // Preload all sound effects
+        preloadSounds();
+        // Set initial sound button display
+        updateSoundButtonDisplay();
+        startGame();
+      };
+
+      // Function to preload all sound effects
+      function preloadSounds() {
+        const sounds = ["correct-sound", "levelup-sound", "wrong-sound"];
+        sounds.forEach((soundId) => {
+          const sound = document.getElementById(soundId);
+          if (sound) {
+            // Force the browser to load the sound
+            sound.load();
+            // Create a buffer source but don't play it
+            try {
+              sound
+                .play()
+                .then(() => {
+                  sound.pause();
+                  sound.currentTime = 0;
+                })
+                .catch((e) => {
+                  console.log("Error preloading sound:", e);
+                });
+            } catch (e) {
+              console.log("Error preloading sound:", e);
+            }
+          }
+        });
+      }
     </script>
   </body>
 </html>
